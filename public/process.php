@@ -74,14 +74,14 @@ if ($stmt->execute()) {
     $mail->isHTML(true);  // Establecer el formato del email a HTML
 
     $mail->Subject = 'Intencion Recibida';
-    $htmlContent = file_get_contents('../public/bodyMail.html'); // Asegúrate de que la ruta al archivo sea correcta.
+    $htmlContent = file_get_contents('bodyMail.html'); // Asegúrate de que la ruta al archivo sea correcta.
     $mail->Body = $htmlContent;
 
     if (!$mail->send()) {
         echo 'El mensaje no pudo ser enviado.';
         echo 'Error de correo: ' . $mail->ErrorInfo;
     } else {
-        header("Location: ../public/confirm.html");
+        header("Location: confirm.html");
     }
     exit();
 } else {
