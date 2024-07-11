@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Formulario de Intención</title>
+</head>
+
+<body>
+    <!-- Barra de navegación fija en la parte superior -->
+    <nav class="navbar navbar-expand-lg fixed-top custom-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="img/CLERIGOS_LOGO_RECORTADA.png" alt="Logo" width="200" height="60" class="d-inline-block align-top">
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-5">
+        <div id="wizard" class="bs-stepper">
+            <div class="bs-stepper-header" role="tablist">
+                <div class="step" data-target="#part-1">
+                    <button type="button" class="step-trigger" role="tab" aria-controls="part-1" id="part-1-trigger">
+                        <span class="bs-stepper-circle">1</span>
+                        <span class="bs-stepper-label">Datos Personales</span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#part-2">
+                    <button type="button" class="step-trigger" role="tab" aria-controls="part-2" id="part-2-trigger">
+                        <span class="bs-stepper-circle">2</span>
+                        <span class="bs-stepper-label">Intención</span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#part-3">
+                    <button type="button" class="step-trigger" role="tab" aria-controls="part-3" id="part-3-trigger">
+                        <span class="bs-stepper-circle">3</span>
+                        <span class="bs-stepper-label">Verificar y Enviar</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bs-stepper-content">
+                <form action="../src/process.php" id="form" class="needs-validation"  method="post" novalidate>
+                    <!-- Primera Parte del Formulario -->
+                    <div id="part-1" class="content custom-step" role="tabpanel" aria-labelledby="part-1-trigger">
+                        <div class="form-group mb-3">
+                            <label for="email">Correo</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su correo" required>
+                            <div class="invalid-feedback">Por favor, ingresa un correo electrónico válido.</div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="fullName">Nombre y Apellido</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Ingrese su nombre y apellido" required>
+                            <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phone">Teléfono</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Ingrese su número de teléfono" required>
+                            <div class="invalid-feedback">Por favor, ingresa tu teléfono.</div>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Siguiente</button>
+                    </div>
+
+                    <!-- Segunda Parte del Formulario -->
+                    <div id="part-2" class="content" role="tabpanel" aria-labelledby="part-2-trigger">
+                        <div class="form-group mb-3">
+                            <label for="parish">Seleccionar Parroquia</label>
+                            <select class="form-control" id="parish" name="parish" required>
+                                <option value="" disabled selected>Seleccione una parroquia</option>
+                                <option value="Santa Sofia">Santa Sofia</option>
+                                <option value="Parroquia 2">Parroquia 2</option>
+                                <option value="Parroquia 3">Parroquia 3</option>
+                                <option value="Parroquia 4">Parroquia 4</option>
+                            </select>
+                            <div class="invalid-feedback">Por favor, selecciona una parroquia.</div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="intentionType">Seleccionar Intención</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="intentionType1" name="intentionType" value="Enfermo" required>
+                                <label class="form-check-label" for="intentionType1">Enfermo</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="intentionType2" name="intentionType" value="Difunto" required>
+                                <label class="form-check-label" for="intentionType2">Difunto</label>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="recipientName">Nombre del beneficiario</label>
+                            <input type="text" class="form-control" id="recipientName" name="recipientName" placeholder="Ingrese el nombre del beneficiario" required>
+                            <div class="invalid-feedback">Por favor, ingresa un beneficiario.</div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="previousStep()">Atrás</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Siguiente</button>
+                    </div>
+
+                    <!-- Tercera Parte del Formulario -->
+                    <div id="part-3" class="content" role="tabpanel" aria-labelledby="part-3-trigger">
+                        <div>
+                            <p><strong>Datos Personales:</strong></p>
+                            <ul>
+                                <li><strong>Email:</strong> <span id="review-email"></span></li>
+                                <li><strong>Nombre y Apellido:</strong> <span id="review-fullName"></span></li>
+                                <li><strong>Teléfono:</strong> <span id="review-phone"></span></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p><strong>Intención:</strong></p>
+                            <ul>
+                                <li><strong>Parroquia:</strong> <span id="review-parish"></span></li>
+                                <li><strong>Tipo de Intención:</strong> <span id="review-intentionType"></span></li>
+                                <li><strong>Beneficiario:</strong> <span id="review-recipientName"></span></li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="previousStep()">Atrás</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            window.stepper = new Stepper(document.querySelector('#wizard'), {
+                linear: true,
+                animation: true
+            });
+        });
+
+        function nextStep() {
+            var currentStep = stepper._currentIndex + 1;
+            var form = document.getElementById('form');
+            var stepElement = document.getElementById(`part-${currentStep}`);
+            var inputs = stepElement.querySelectorAll('input, select, textarea');
+            var isValid = true;
+
+            inputs.forEach(function (input) {
+                if (!input.checkValidity()) {
+                    isValid = false;
+                }
+            });
+
+            form.classList.add('was-validated');
+
+            if (isValid) {
+                if (currentStep === 1) {
+                    document.getElementById('review-email').textContent = document.getElementById('email').value;
+                    document.getElementById('review-fullName').textContent = document.getElementById('fullName').value;
+                    document.getElementById('review-phone').textContent = document.getElementById('phone').value;
+                } else if (currentStep === 2) {
+                    document.getElementById('review-parish').textContent = document.getElementById('parish').value;
+                    const selectedRadio = document.querySelector('input[name="intentionType"]:checked');
+                    document.getElementById('review-intentionType').textContent = selectedRadio ? selectedRadio.value : '';
+                    document.getElementById('review-recipientName').textContent = document.getElementById('recipientName').value;
+                }
+                stepper.next();
+            }
+        }
+
+        function previousStep() {
+            stepper.previous();
+        }
+
+        document.getElementById('form').addEventListener('submit', function (event) {
+            if (!this.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            } 
+            this.classList.add('was-validated');
+        }, false);
+
+
+    </script>
+</body>
+
+</html>

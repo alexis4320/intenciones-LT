@@ -1,0 +1,18 @@
+
+/* Fijar el ancho del contenedor para pantallas grandes */
+/* @media (min-width: 992px) {
+    .custom-container {
+        max-width: 992px; Ajusta este valor según sea necesario
+    }
+} */
+
+.custom-navbar {
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.custom-step {
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    padding: 20px;
+}
